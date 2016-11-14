@@ -23,7 +23,7 @@ app.use('/wiki', router);
 
 db.User.sync({})
 .then(function () {
-    return db.Page.sync({})
+    return db.Page.sync({force: true})
 })
 .then(function () {
     app.listen(3000, function () {

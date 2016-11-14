@@ -21,13 +21,13 @@ const Page = db.define('page', {
         },
         hooks: {
             beforeValidate: function (page, options) {
-                console.log('hi');
                 page.urlTitle = page.title.replace(/\s+/g, '_').replace(/\W+/g, '');
-                console.log(page.urlTitle);
             }
         }
     }
 );
+
+Page.belongsTo(User, { as: 'author' });
 
 module.exports = {
     Page: Page,
