@@ -6,9 +6,19 @@ var User = models.User;
 
 
 router.get('/', (req, res, next) => {
-  res.render('index');
+
+  Page.findAll({
+
+  }).then((pages)=>{
+    console.log(pages)
+    res.render('index', {pages})
+  }).catch(next);
+
+
+
+  // res.render('index');
   // res.redirect('/');
-  next();
+
 })
 
 router.post('/', (req, res, next) => {
@@ -23,8 +33,9 @@ router.post('/', (req, res, next) => {
   })
 
   page.save().then(function () {
-    res.json(page);
-    next();
+    console.log(this)
+    res.redirect('/wiki/' + page.urlTitle)
+        next();
   });
 })
 
@@ -33,13 +44,28 @@ router.get('/add', (req, res, next) => {
   next();
 })
 
-// router.post('/add', (req, res, next) => {
+router.get('/:urlTitle', (req,res,next)=>{
+Page.findOne({
+  where: {
+    urlTitle : req.params.urlTitle
+  }
+})
+.then((page)=>{
+  // res.json(page);
+  res.render('wikipage', {page});
 
-//     next();
-// })
+})
+.catch(next);
+
+
+
+
+// res.send(req.params.urlTitle);
+})
 
 
 module.exports = router;
+
 
 
 
