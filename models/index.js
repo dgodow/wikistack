@@ -1,20 +1,20 @@
 const Sequelize = require('sequelize');
 const db = new Sequelize('postgres://localhost:5432/wikistack'
-    //, {logging: false}
+    , {logging: false}
     );
 
 const User = db.define('user', {
-    name: Sequelize.STRING,
-    email: Sequelize.STRING
+    name: {type: Sequelize.STRING, allowNull: false},
+    email: {type: Sequelize.STRING, allowNull: false, isEmail: true}
 });
 
 const Page = db.define('page', {
-    title: Sequelize.STRING,
-    urlTitle: Sequelize.STRING,
-    content: Sequelize.TEXT,
-    status: Sequelize.ENUM('open', 'closed')
+    title: {type: Sequelize.STRING, allowNull: false, defaultValue: 'No title'},
+    urlTitle: {type: Sequelize.STRING, allowNull: false},
+    // date: {type: Sequelize.DATE, defaultValue: Sequelize.NOW},
+    content: {type: Sequelize.TEXT, allowNull: false, defaultValue: 'No text'},
+    status: {type: Sequelize.ENUM('open', 'closed'), defaultValue: 'open'}
 });
-
 
 module.exports = {
     Page: Page,
