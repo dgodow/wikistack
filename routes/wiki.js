@@ -12,16 +12,20 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-var page = Page.build({
-	title: req.body.title,
-	content: req.body.content
-	status: req.body.status
-})
-page.save();
-	  // res.json(req.body);
-	  res.redirect('/');
+  // var urlTitle = req.body.title;
+  // urlTitle = urlTitle.replace(/\s+/g, '_').replace(/\W+/g, '');
 
-  next();
+  var page = Page.build({
+    title: req.body.title,
+    content: req.body.content,
+    status: req.body.status,
+    urlTitle: req.body.title,
+  })
+
+  page.save().then(function () {
+    res.json(page);
+    next();
+  });
 })
 
 router.get('/add', (req, res, next) => {

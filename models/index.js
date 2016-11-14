@@ -19,6 +19,13 @@ const Page = db.define('page', {
         getterMethods: {
             route: function () {return '/wiki/' + this.urlTitle}
         },
+        hooks: {
+            beforeValidate: function (page, options) {
+                console.log('hi');
+                page.urlTitle = page.title.replace(/\s+/g, '_').replace(/\W+/g, '');
+                console.log(page.urlTitle);
+            }
+        }
     }
 );
 
