@@ -2,8 +2,9 @@ var express = require('express');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
+var router = require('./routes/wiki');
 
-var db = require('./models/index.js');
+var db = require('./models/index');
 
 var app = express();
 
@@ -12,13 +13,7 @@ app.set('view engine', 'html'); // have res.render work with html files
 app.engine('html', nunjucks.render); // when giving html files to res.render, tell it to use nunjucks
 
 app.use(morgan('dev'));
-
-
-
-
-
-
-
+app.use('/wiki', router);
 
 db.User.sync({})
 .then(function () {

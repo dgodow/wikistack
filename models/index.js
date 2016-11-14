@@ -14,7 +14,13 @@ const Page = db.define('page', {
     // date: {type: Sequelize.DATE, defaultValue: Sequelize.NOW},
     content: {type: Sequelize.TEXT, allowNull: false, defaultValue: 'No text'},
     status: {type: Sequelize.ENUM('open', 'closed'), defaultValue: 'open'}
-});
+    },
+    {
+        getterMethods: {
+            route: function () {return '/wiki/' + this.urlTitle}
+        },
+    }
+);
 
 module.exports = {
     Page: Page,
